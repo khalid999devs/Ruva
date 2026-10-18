@@ -1,0 +1,8 @@
+{
+  "args": [
+    "inspect",
+    "absent.ruv"
+  ],
+  "stderr": "stderr.txt",
+  "exit": 1
+}

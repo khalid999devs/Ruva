@@ -1,0 +1,11 @@
+{
+  "args": [
+    "copy"
+  ],
+  "stdin": "input.txt",
+  "stdout": "input.txt",
+  "stderr": "stderr.txt",
+  "files": {
+    "result.txt": "input.txt"
+  }
+}

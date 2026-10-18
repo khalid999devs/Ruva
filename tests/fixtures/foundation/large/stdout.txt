@@ -1,0 +1,4 @@
+bytes=8194 lines=2
+line=1 bytes=4095
+line=2 bytes=4097
+eof=2:4098

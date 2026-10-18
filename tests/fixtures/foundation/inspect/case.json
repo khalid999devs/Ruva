@@ -1,0 +1,10 @@
+{
+  "args": [
+    "inspect",
+    "input.ruv"
+  ],
+  "inputs": [
+    "input.ruv"
+  ],
+  "stdout": "stdout.txt"
+}

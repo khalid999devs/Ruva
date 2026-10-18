@@ -1,0 +1,7 @@
+{
+  "args": [
+    "allocation-failure"
+  ],
+  "stderr": "stderr.txt",
+  "exit": 1
+}

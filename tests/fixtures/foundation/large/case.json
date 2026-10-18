@@ -1,0 +1,10 @@
+{
+  "args": [
+    "inspect",
+    "input.bin"
+  ],
+  "inputs": [
+    "input.bin"
+  ],
+  "stdout": "stdout.txt"
+}

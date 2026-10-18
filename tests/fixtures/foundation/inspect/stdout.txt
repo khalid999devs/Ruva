@@ -1,0 +1,6 @@
+bytes=32 lines=4
+line=1 bytes=10
+line=2 bytes=18
+line=3 bytes=1
+line=4 bytes=0
+eof=4:1

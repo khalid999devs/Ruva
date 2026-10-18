@@ -1,8 +1,8 @@
 # Ruva
 
-Ruva is a programming language project with a native compiler named `ruvac`. Source files use the `.ruv` extension. The planned compiler is written in C11, uses Flex for tokenization, emits C, and invokes GCC or Clang to produce an executable.
+Ruva is a programming language project with a native compiler named `ruvac`. Source files use the `.ruv` extension. The compiler is being built in C11 with Flex for tokenization, C output, and GCC or Clang for native compilation.
 
-**Status:** repository setup is complete; the compiler and runtime are not implemented yet. Build commands will be added with the first working compiler slice.
+**Status:** compiler foundations are implemented: source buffers, spans, diagnostics, an arena, a vector and an isolated fixture runner. The lexer and later stages are next; a `ruvac` executable is not available yet.
 
 ## Intended flow
 
@@ -20,7 +20,7 @@ launch() {
 
 ## Development setup
 
-The planned toolchain needs a C11 compiler, Flex and Make. Python 3.9 or later runs the repository checks; Git manages source history.
+A C11 compiler, Make and Python 3.9 or later are needed for the current build and tests. Flex is needed for the upcoming lexer. Git manages source history.
 
 After cloning, enable the tracked Git hooks:
 
@@ -32,6 +32,25 @@ python3 -m unittest discover -s tests/repository -v
 
 The hooks run repository checks before commits and pushes. Git does not enable repository hooks automatically in a fresh clone, so the configuration command is required there.
 
+## Build and test
+
+```sh
+make
+make test
+make sanitize
+make clean
+```
+
+The default build produces `build/debug/lib/libruva_foundation.a` and foundation test programs. `make test` runs C checks, seven program fixtures, and Python tooling tests. `make sanitize` builds and runs the C checks and fixtures with AddressSanitizer and UndefinedBehaviorSanitizer on supported toolchains. `make clean` removes generated build output.
+
+Compiler and flags can be overridden, using a separate output directory when they change:
+
+```sh
+make CC=clang BUILD_DIR=build/clang test
+```
+
+The test probe exercises foundation APIs; it does not compile Ruva programs yet.
+
 ## Repository organization
 
 | Path | Purpose |
@@ -39,8 +58,12 @@ The hooks run repository checks before commits and pushes. Git does not enable r
 | `.githooks/` | Commit and push checks |
 | `scripts/repository/` | Repository checks |
 | `tests/repository/` | Tests for the repository guards |
-| `compiler/`, `runtime/` | Added as compiler work begins |
-| `examples/`, compiler test directories | Added with working language slices |
+| `compiler/common/` | Platform checks, allocation, source handling and diagnostics |
+| `scripts/testing/` | Isolated program fixture runner |
+| `tests/foundation/` | C unit checks and fixture probe |
+| `tests/fixtures/foundation/` | Source, diagnostic, I/O and allocation fixtures |
+| `tests/testing/` | Fixture runner tests |
+| `runtime/`, `examples/` | Added with later working language slices |
 
 Keep no more than six direct project files in a directory. Group new files into subdirectories by responsibility before exceeding that limit.
 
