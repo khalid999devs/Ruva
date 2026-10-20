@@ -1,0 +1,26 @@
+bring { total } from "missing.ruv";
+share keep factor: int = 010;
+object Box {
+    title: text;
+}
+craft label(value: int) -> text {
+    give "label";
+}
+launch() {
+    vary values: int[] = [08, 3];
+    keep box = Box { title: "ready" };
+    check true && !false {
+        show(box.title);
+    } otherwise {}
+    choose 1 {
+        when 1 => { show(label(1)); }
+        otherwise => {}
+    }
+    walk item in values { show(item); }
+    walk index from 0 until length(values) { show(values[index]); }
+    during false {}
+    keep response = ask(text);
+    vary output: file = fileOpen("out.txt", "w");
+    fileWriteTo(output, response);
+    fileClose(output);
+}

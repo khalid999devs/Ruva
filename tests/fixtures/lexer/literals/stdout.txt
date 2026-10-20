@@ -1,0 +1,8 @@
+1:1 integer "010"
+2:1 integer "08"
+3:1 - "-"
+3:2 integer "2147483648"
+4:1 real literal "001.050"
+5:1 text literal "\"a\\n\"" -> "a\n"
+6:1 text literal "\"\xc3\xa9\"" -> "\xc3\xa9"
+7:1 end of file ""

@@ -1,0 +1,6 @@
+2:2 keep "keep"
+2:7 identifier "ready"
+2:13 = "="
+2:15 true "true"
+2:19 ; ";"
+3:7 end of file ""

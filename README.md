@@ -2,7 +2,7 @@
 
 Ruva is a programming language project with a native compiler named `ruvac`. Source files use the `.ruv` extension. The compiler is being built in C11 with Flex for tokenization, C output, and GCC or Clang for native compilation.
 
-**Status:** compiler foundations are implemented: source buffers, spans, diagnostics, an arena, a vector and an isolated fixture runner. The lexer and later stages are next; a `ruvac` executable is not available yet.
+**Status:** compiler foundations and the Flex lexer are implemented, including positioned tokens, UTF-8 text validation and decoded literals. Parsing and later stages are next; a `ruvac` executable is not available yet.
 
 ## Intended flow
 
@@ -20,7 +20,7 @@ launch() {
 
 ## Development setup
 
-A C11 compiler, Make and Python 3.9 or later are needed for the current build and tests. Flex is needed for the upcoming lexer. Git manages source history.
+A C11 compiler, Make and Python 3.9 or later are needed for the current build and tests. Flex is needed to generate the lexer. Git manages source history.
 
 After cloning, enable the tracked Git hooks:
 
@@ -41,7 +41,7 @@ make sanitize
 make clean
 ```
 
-The default build produces `build/debug/lib/libruva_foundation.a` and foundation test programs. `make test` runs C checks, seven program fixtures, and Python tooling tests. `make sanitize` builds and runs the C checks and fixtures with AddressSanitizer and UndefinedBehaviorSanitizer on supported toolchains. `make clean` removes generated build output.
+The default build produces foundation and lexer libraries, C tests and a lexer inspection tool under `build/debug/`. `make test` runs two C suites, 18 program fixtures and Python tooling tests. `make sanitize` builds and runs the C checks and fixtures with AddressSanitizer and UndefinedBehaviorSanitizer on supported toolchains. `make clean` removes generated build output.
 
 Compiler and flags can be overridden, using a separate output directory when they change:
 
@@ -49,7 +49,15 @@ Compiler and flags can be overridden, using a separate output directory when the
 make CC=clang BUILD_DIR=build/clang test
 ```
 
-The test probe exercises foundation APIs; it does not compile Ruva programs yet.
+The lexer inspection tool shows tokens and source positions. It does not parse, check types or compile Ruva programs yet.
+
+## Inspection tools
+
+```sh
+build/debug/tests/lexer/lexer-probe tests/fixtures/lexer/literals/input.ruv
+```
+
+The lexer probe prints token kinds, source positions, original spellings and decoded text. Its `--check` option checks lexical validity only.
 
 ## Repository organization
 
@@ -58,7 +66,8 @@ The test probe exercises foundation APIs; it does not compile Ruva programs yet.
 | `.githooks/` | Commit and push checks |
 | `scripts/repository/` | Repository checks |
 | `tests/repository/` | Tests for the repository guards |
-| `compiler/common/` | Platform checks, allocation, source handling and diagnostics |
+| `compiler/common/` | Platform checks, allocation, source handling, diagnostics and byte-oriented stream setup |
+| `compiler/frontend/lexer/`, `tests/lexer/`, `tests/fixtures/lexer/` | Lexer, inspection tool and positive/negative checks |
 | `scripts/testing/` | Isolated program fixture runner |
 | `tests/foundation/` | C unit checks and fixture probe |
 | `tests/fixtures/foundation/` | Source, diagnostic, I/O and allocation fixtures |
