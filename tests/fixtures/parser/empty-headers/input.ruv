@@ -1,0 +1,10 @@
+object Empty {}
+launch() {
+    check ready {}
+    during ready {}
+    walk value in values {}
+    walk field in Empty {} {}
+    check (Empty {}) {}
+    keep Empty = true;
+    check Empty {} {}
+}

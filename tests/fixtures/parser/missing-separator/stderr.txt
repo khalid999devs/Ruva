@@ -1,0 +1,1 @@
+input.ruv:3:1: error: expected ';' after declaration

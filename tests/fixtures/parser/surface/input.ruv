@@ -1,0 +1,20 @@
+bring { helper } from "missing.ruv";
+share keep limit: int = -010;
+object Item { label: text; count: int; }
+craft adjust(value: int) -> int {
+    check value >= 0 { give value; } otherwise { give -value; }
+}
+launch() {
+    vary values: int[] = [08, 3];
+    keep item = Item { count: length(values), label: "demo" };
+    values[0] = adjust(values[0]);
+    show(item.label, toReal(ask(int)) + ask(real));
+    choose item.label {
+        when "demo" => { show(true); }
+        otherwise => {}
+    }
+    walk index from 0 until length(values) { show(values[index]); }
+    walk value in values { show(value); }
+    during false {}
+    give;
+}

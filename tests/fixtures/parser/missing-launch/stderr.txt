@@ -1,0 +1,1 @@
+input.ruv:2:1: error: entry file requires launch()

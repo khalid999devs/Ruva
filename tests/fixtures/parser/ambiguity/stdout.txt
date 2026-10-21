@@ -1,0 +1,50 @@
+(entry
+  (launch
+    (result void)
+    (block
+      (choice
+        (sequence
+          (check
+            (name flag)
+            (block
+            )
+          )
+          (block
+            (expression
+              (call
+                (name show)
+                (integer 1)
+              )
+            )
+          )
+          (expression
+            (call
+              (name show)
+              (integer 2)
+            )
+          )
+        )
+        (sequence
+          (check
+            (record flag
+            )
+            (block
+              (expression
+                (call
+                  (name show)
+                  (integer 1)
+                )
+              )
+            )
+          )
+          (expression
+            (call
+              (name show)
+              (integer 2)
+            )
+          )
+        )
+      )
+    )
+  )
+)

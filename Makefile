@@ -34,13 +34,26 @@ LEXER_LIBRARY = $(BUILD_DIR)/lib/libruva_lexer.a
 LEXER_TEST = $(BUILD_DIR)/tests/lexer/lexer-tests
 LEXER_PROBE = $(BUILD_DIR)/tests/lexer/lexer-probe
 SCANNER_SOURCE = $(BUILD_DIR)/compiler/frontend/lexer/scanner.c
+PARSER_SOURCES = compiler/frontend/ast/ast.c compiler/frontend/ast/dump.c \
+    compiler/frontend/parser/parser.c compiler/frontend/parser/expression.c \
+    compiler/frontend/parser/statement.c compiler/frontend/parser/declaration.c
+PARSER_OBJECTS = $(patsubst %.c,$(BUILD_DIR)/%.o,$(PARSER_SOURCES))
+PARSER_LIBRARY = $(BUILD_DIR)/lib/libruva_parser.a
+PARSER_TEST_SOURCES = tests/parser/main.c tests/parser/expressions.c \
+    tests/parser/declarations.c tests/parser/statements.c tests/parser/ambiguity.c \
+    tests/parser/support/helpers.c tests/parser/support/failures.c tests/foundation/support.c
+PARSER_TEST_OBJECTS = $(patsubst %.c,$(BUILD_DIR)/%.o,$(PARSER_TEST_SOURCES))
+PARSER_TEST = $(BUILD_DIR)/tests/parser/parser-tests
+PARSER_PROBE_OBJECT = $(BUILD_DIR)/tests/parser/tools/probe.o
+PARSER_PROBE = $(BUILD_DIR)/tests/parser/parser-probe
 
-.PHONY: all test test-foundation test-fixtures test-lexer test-lexer-fixtures test-python \
-    check-repository sanitize clean
+.PHONY: all test test-foundation test-fixtures test-lexer test-lexer-fixtures test-parser \
+    test-parser-fixtures test-python check-repository sanitize clean
 
-all: $(LIBRARY) $(FOUNDATION_TEST) $(FIXTURE_PROBE) $(LEXER_LIBRARY) $(LEXER_TEST) $(LEXER_PROBE)
+all: $(LIBRARY) $(FOUNDATION_TEST) $(FIXTURE_PROBE) $(LEXER_LIBRARY) $(LEXER_TEST) $(LEXER_PROBE) \
+    $(PARSER_LIBRARY) $(PARSER_TEST) $(PARSER_PROBE)
 
-$(LIBRARY) $(LEXER_LIBRARY): Makefile
+$(LIBRARY) $(LEXER_LIBRARY) $(PARSER_LIBRARY): Makefile
 
 $(BUILD_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
@@ -76,7 +89,19 @@ $(LEXER_TEST): $(LEXER_TEST_OBJECTS) $(LEXER_LIBRARY) $(LIBRARY)
 $(LEXER_PROBE): $(LEXER_PROBE_OBJECT) $(LEXER_LIBRARY) $(LIBRARY)
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ $(LDLIBS) -o $@
 
-test: check-repository test-foundation test-fixtures test-lexer test-lexer-fixtures test-python
+$(PARSER_LIBRARY): $(PARSER_OBJECTS)
+	@mkdir -p $(dir $@)
+	$(RM) $@
+	$(AR) rcs $@ $(filter %.o,$^)
+
+$(PARSER_TEST): $(PARSER_TEST_OBJECTS) $(PARSER_LIBRARY) $(LEXER_LIBRARY) $(LIBRARY)
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ $(LDLIBS) -o $@
+
+$(PARSER_PROBE): $(PARSER_PROBE_OBJECT) $(PARSER_LIBRARY) $(LEXER_LIBRARY) $(LIBRARY)
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ $(LDLIBS) -o $@
+
+test: check-repository test-foundation test-fixtures test-lexer test-lexer-fixtures test-parser \
+    test-parser-fixtures test-python
 
 check-repository:
 	$(PYTHON) scripts/repository/check-layout.py
@@ -94,6 +119,12 @@ test-lexer: $(LEXER_TEST)
 test-lexer-fixtures: $(LEXER_PROBE)
 	$(PYTHON) scripts/testing/fixtures.py --program $(LEXER_PROBE) tests/fixtures/lexer
 
+test-parser: $(PARSER_TEST)
+	$(PARSER_TEST)
+
+test-parser-fixtures: $(PARSER_PROBE)
+	$(PYTHON) scripts/testing/fixtures.py --program $(PARSER_PROBE) tests/fixtures/parser
+
 test-python:
 	$(PYTHON) -m unittest discover -s tests/repository -v
 	$(PYTHON) -m unittest discover -s tests/testing -v
@@ -101,10 +132,13 @@ test-python:
 sanitize:
 	$(MAKE) BUILD_DIR=build/sanitize \
 	    CFLAGS="-O1 -g -fno-omit-frame-pointer -fsanitize=address,undefined -fno-sanitize-recover=all" \
-	    LDFLAGS="-fsanitize=address,undefined" test-foundation test-fixtures test-lexer test-lexer-fixtures
+	    LDFLAGS="-fsanitize=address,undefined" test-foundation test-fixtures test-lexer \
+	    test-lexer-fixtures test-parser test-parser-fixtures
 
 clean:
 	rm -rf build
 
 -include $(FOUNDATION_OBJECTS:.o=.d) $(TEST_OBJECTS:.o=.d) $(PROBE_OBJECTS:.o=.d)
 -include $(LEXER_OBJECTS:.o=.d) $(LEXER_TEST_OBJECTS:.o=.d) $(LEXER_PROBE_OBJECT:.o=.d)
+-include $(PARSER_OBJECTS:.o=.d)
+-include $(PARSER_TEST_OBJECTS:.o=.d) $(PARSER_PROBE_OBJECT:.o=.d)

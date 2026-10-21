@@ -1,0 +1,1 @@
+input.ruv:3:14: error: when requires an unsigned integer or text literal

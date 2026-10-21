@@ -1,0 +1,1 @@
+input.ruv:2:5: error: assignment requires a name, name.field or name[index]

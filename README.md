@@ -2,7 +2,7 @@
 
 Ruva is a programming language project with a native compiler named `ruvac`. Source files use the `.ruv` extension. The compiler is being built in C11 with Flex for tokenization, C output, and GCC or Clang for native compilation.
 
-**Status:** compiler foundations and the Flex lexer are implemented, including positioned tokens, UTF-8 text validation and decoded literals. Parsing and later stages are next; a `ruvac` executable is not available yet.
+**Status:** the lexer and recursive-descent parser are implemented, including syntax trees, precedence, declarations and control flow. Name resolution, type checking and native compilation are next; a `ruvac` executable is not available yet.
 
 ## Intended flow
 
@@ -41,7 +41,7 @@ make sanitize
 make clean
 ```
 
-The default build produces foundation and lexer libraries, C tests and a lexer inspection tool under `build/debug/`. `make test` runs two C suites, 18 program fixtures and Python tooling tests. `make sanitize` builds and runs the C checks and fixtures with AddressSanitizer and UndefinedBehaviorSanitizer on supported toolchains. `make clean` removes generated build output.
+The default build produces foundation, lexer and parser libraries, C tests and inspection tools under `build/debug/`. `make test` runs three C suites, 40 program fixtures and Python tooling tests. `make sanitize` builds and runs the C checks and fixtures with AddressSanitizer and UndefinedBehaviorSanitizer on supported toolchains. `make clean` removes generated build output.
 
 Compiler and flags can be overridden, using a separate output directory when they change:
 
@@ -49,7 +49,7 @@ Compiler and flags can be overridden, using a separate output directory when the
 make CC=clang BUILD_DIR=build/clang test
 ```
 
-The lexer inspection tool shows tokens and source positions. It does not parse, check types or compile Ruva programs yet.
+The inspection tools show tokens and syntax trees. They do not resolve names, check types or produce native programs yet.
 
 ## Inspection tools
 
@@ -58,6 +58,13 @@ build/debug/tests/lexer/lexer-probe tests/fixtures/lexer/literals/input.ruv
 ```
 
 The lexer probe prints token kinds, source positions, original spellings and decoded text. Its `--check` option checks lexical validity only.
+
+```sh
+build/debug/tests/parser/parser-probe tests/fixtures/parser/expression/input.ruv
+build/debug/tests/parser/parser-probe --module --check tests/fixtures/parser/module/input.ruv
+```
+
+The parser probe prints an abstract syntax tree. `--module` selects imported-module syntax and `--check` checks syntax without printing the tree. Semantic errors are checked by later compiler stages.
 
 ## Repository organization
 
@@ -68,6 +75,8 @@ The lexer probe prints token kinds, source positions, original spellings and dec
 | `tests/repository/` | Tests for the repository guards |
 | `compiler/common/` | Platform checks, allocation, source handling, diagnostics and byte-oriented stream setup |
 | `compiler/frontend/lexer/`, `tests/lexer/`, `tests/fixtures/lexer/` | Lexer, inspection tool and positive/negative checks |
+| `compiler/frontend/ast/`, `compiler/frontend/parser/`, `compiler/analysis/types/type.h` | Syntax trees, recursive-descent parser and shared type declarations |
+| `tests/parser/`, `tests/fixtures/parser/` | Parser structure, syntax, ambiguity and allocation-failure checks |
 | `scripts/testing/` | Isolated program fixture runner |
 | `tests/foundation/` | C unit checks and fixture probe |
 | `tests/fixtures/foundation/` | Source, diagnostic, I/O and allocation fixtures |

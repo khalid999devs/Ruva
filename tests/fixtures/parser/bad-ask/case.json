@@ -1,0 +1,10 @@
+{
+  "args": [
+    "input.ruv"
+  ],
+  "inputs": [
+    "input.ruv"
+  ],
+  "stderr": "stderr.txt",
+  "exit": 1
+}

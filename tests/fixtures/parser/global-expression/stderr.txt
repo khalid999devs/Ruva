@@ -1,0 +1,1 @@
+input.ruv:1:16: error: expected ';' after constant

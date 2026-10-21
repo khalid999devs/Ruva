@@ -1,0 +1,9 @@
+{
+  "args": [
+    "--check",
+    "input.ruv"
+  ],
+  "inputs": [
+    "input.ruv"
+  ]
+}

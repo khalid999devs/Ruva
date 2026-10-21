@@ -1,0 +1,10 @@
+(entry
+  (launch
+    (result void)
+    (block
+      (keep name infer
+        (ask text)
+      )
+    )
+  )
+)

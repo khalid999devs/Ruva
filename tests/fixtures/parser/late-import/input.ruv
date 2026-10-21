@@ -1,0 +1,2 @@
+object Empty {}
+bring { name } from "missing.ruv";

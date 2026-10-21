@@ -1,0 +1,1 @@
+launch() { keep total = 1 + 2 * 3; }

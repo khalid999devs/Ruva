@@ -1,0 +1,2 @@
+share object Empty {}
+share craft identity(value: Empty) -> Empty { give value; }
