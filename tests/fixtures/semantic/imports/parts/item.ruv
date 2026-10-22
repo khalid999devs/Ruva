@@ -1,0 +1,2 @@
+share object Item { count: int; }
+share craft make() -> Item { give Item { count: 4 }; }

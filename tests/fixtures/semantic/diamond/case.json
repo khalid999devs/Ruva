@@ -1,0 +1,11 @@
+{
+  "args": [
+    "input.ruv"
+  ],
+  "inputs": [
+    "input.ruv",
+    "left.ruv",
+    "right.ruv",
+    "common.ruv"
+  ]
+}

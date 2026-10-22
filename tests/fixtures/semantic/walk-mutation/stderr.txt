@@ -1,0 +1,1 @@
+input.ruv:3:28: error: cannot resize or replace an active array walk target

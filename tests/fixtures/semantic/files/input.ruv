@@ -1,0 +1,1 @@
+launch() { vary f = (fileOpen("a", "w")); fileWriteTo(f, "data"); fileClose(f); f = fileOpen("a", "r"); show(fileReadFrom(f), fileClose(f)); }

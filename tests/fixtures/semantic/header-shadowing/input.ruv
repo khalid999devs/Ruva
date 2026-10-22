@@ -1,0 +1,2 @@
+object Empty {}
+launch() { walk field in Empty {} {} keep Empty = true; check Empty {} { show(1); } }

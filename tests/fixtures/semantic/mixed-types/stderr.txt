@@ -1,0 +1,1 @@
+input.ruv:2:10: error: operator operands must have the same type

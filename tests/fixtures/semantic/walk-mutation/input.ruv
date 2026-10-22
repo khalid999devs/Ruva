@@ -1,0 +1,4 @@
+launch() {
+    vary a = [1];
+    walk x in a { show(pop(a)); }
+}

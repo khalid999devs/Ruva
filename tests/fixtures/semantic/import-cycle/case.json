@@ -1,0 +1,12 @@
+{
+  "args": [
+    "--relative-diagnostics",
+    "input.ruv"
+  ],
+  "inputs": [
+    "input.ruv",
+    "lib.ruv"
+  ],
+  "stderr": "stderr.txt",
+  "exit": 1
+}

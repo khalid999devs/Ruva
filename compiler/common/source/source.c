@@ -1,6 +1,7 @@
 #include "source.h"
 #include "span.h"
 #include "compiler/common/memory/vector.h"
+#include "compiler/common/host/files.h"
 
 #include <errno.h>
 #include <stdio.h>
@@ -95,7 +96,7 @@ RvSource *rv_source_load(RvAllocator allocator, const char *path, RvSourceError 
         return NULL;
     }
     errno = 0;
-    FILE *stream = fopen(path, "rb");
+    FILE *stream = rv_host_fopen(path, "rb");
     if (stream == NULL) {
         set_error(error, RV_SOURCE_IO, errno);
         return NULL;

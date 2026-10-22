@@ -1,0 +1,4 @@
+launch() {
+    keep value = 1;
+    value = 2;
+}

@@ -1,0 +1,1 @@
+bring { value } from "common.ruv"; share craft left() -> int { give value; }

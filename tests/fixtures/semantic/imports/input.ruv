@@ -1,0 +1,2 @@
+bring { Item, make } from "parts/item.ruv";
+launch() { keep item: Item = make(); show(item.count); }

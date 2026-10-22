@@ -9,10 +9,15 @@ LDFLAGS ?=
 LDLIBS ?=
 WARNINGS = -std=c11 -Wall -Wextra -Wpedantic -Werror
 
+HOST_SOURCES = compiler/common/host/files.c compiler/common/host/numeric.c
+ifneq ($(findstring mingw,$(shell $(CC) -dumpmachine)),)
+HOST_SOURCES += compiler/common/host/win32/utf8.c
+endif
+
 FOUNDATION_SOURCES = compiler/common/memory/allocator.c \
     compiler/common/memory/arena.c compiler/common/memory/vector.c \
     compiler/common/source/source.c compiler/common/diagnostics/diagnostic.c \
-    compiler/common/host/streams.c
+    compiler/common/host/streams.c $(HOST_SOURCES)
 TEST_SOURCES = tests/foundation/main.c tests/foundation/support.c \
     tests/foundation/memory.c tests/foundation/source.c
 PROBE_SOURCES = tests/foundation/probe.c tests/foundation/support.c
@@ -47,13 +52,33 @@ PARSER_TEST = $(BUILD_DIR)/tests/parser/parser-tests
 PARSER_PROBE_OBJECT = $(BUILD_DIR)/tests/parser/tools/probe.o
 PARSER_PROBE = $(BUILD_DIR)/tests/parser/parser-probe
 
+ANALYSIS_SOURCES = compiler/analysis/types/type.c compiler/analysis/diagnostics/error.c \
+    compiler/analysis/modules/path.c compiler/analysis/modules/loader.c \
+    compiler/analysis/semantics/check.c compiler/analysis/semantics/scope.c \
+    compiler/analysis/semantics/declarations.c compiler/analysis/semantics/statement.c \
+    compiler/analysis/semantics/expressions/expression.c \
+    compiler/analysis/semantics/expressions/call.c \
+    compiler/analysis/semantics/expressions/record.c \
+    compiler/analysis/semantics/expressions/literal.c
+ANALYSIS_OBJECTS = $(patsubst %.c,$(BUILD_DIR)/%.o,$(ANALYSIS_SOURCES))
+ANALYSIS_LIBRARY = $(BUILD_DIR)/lib/libruva_analysis.a
+SEMANTIC_TEST_SOURCES = tests/semantic/main.c tests/semantic/expressions.c \
+    tests/semantic/records.c tests/semantic/ownership.c tests/semantic/names.c \
+    tests/semantic/support/helpers.c tests/semantic/modules/modules.c \
+    tests/semantic/failure/failure.c tests/foundation/support.c
+SEMANTIC_TEST_OBJECTS = $(patsubst %.c,$(BUILD_DIR)/%.o,$(SEMANTIC_TEST_SOURCES))
+SEMANTIC_TEST = $(BUILD_DIR)/tests/semantic/semantic-tests
+SEMANTIC_PROBE_OBJECT = $(BUILD_DIR)/tests/semantic/tools/probe.o
+SEMANTIC_PROBE = $(BUILD_DIR)/tests/semantic/semantic-probe
+
 .PHONY: all test test-foundation test-fixtures test-lexer test-lexer-fixtures test-parser \
-    test-parser-fixtures test-python check-repository sanitize clean
+    test-parser-fixtures test-semantic test-semantic-fixtures test-python check-repository sanitize clean
 
 all: $(LIBRARY) $(FOUNDATION_TEST) $(FIXTURE_PROBE) $(LEXER_LIBRARY) $(LEXER_TEST) $(LEXER_PROBE) \
-    $(PARSER_LIBRARY) $(PARSER_TEST) $(PARSER_PROBE)
+    $(PARSER_LIBRARY) $(PARSER_TEST) $(PARSER_PROBE) \
+    $(ANALYSIS_LIBRARY) $(SEMANTIC_TEST) $(SEMANTIC_PROBE)
 
-$(LIBRARY) $(LEXER_LIBRARY) $(PARSER_LIBRARY): Makefile
+$(LIBRARY) $(LEXER_LIBRARY) $(PARSER_LIBRARY) $(ANALYSIS_LIBRARY): Makefile
 
 $(BUILD_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
@@ -100,8 +125,19 @@ $(PARSER_TEST): $(PARSER_TEST_OBJECTS) $(PARSER_LIBRARY) $(LEXER_LIBRARY) $(LIBR
 $(PARSER_PROBE): $(PARSER_PROBE_OBJECT) $(PARSER_LIBRARY) $(LEXER_LIBRARY) $(LIBRARY)
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ $(LDLIBS) -o $@
 
+$(ANALYSIS_LIBRARY): $(ANALYSIS_OBJECTS)
+	@mkdir -p $(dir $@)
+	$(RM) $@
+	$(AR) rcs $@ $(filter %.o,$^)
+
+$(SEMANTIC_PROBE): $(SEMANTIC_PROBE_OBJECT) $(ANALYSIS_LIBRARY) $(PARSER_LIBRARY) $(LEXER_LIBRARY) $(LIBRARY)
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ $(LDLIBS) -o $@
+
+$(SEMANTIC_TEST): $(SEMANTIC_TEST_OBJECTS) $(ANALYSIS_LIBRARY) $(PARSER_LIBRARY) $(LEXER_LIBRARY) $(LIBRARY)
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ $(LDLIBS) -o $@
+
 test: check-repository test-foundation test-fixtures test-lexer test-lexer-fixtures test-parser \
-    test-parser-fixtures test-python
+    test-parser-fixtures test-semantic test-semantic-fixtures test-python
 
 check-repository:
 	$(PYTHON) scripts/repository/check-layout.py
@@ -125,6 +161,12 @@ test-parser: $(PARSER_TEST)
 test-parser-fixtures: $(PARSER_PROBE)
 	$(PYTHON) scripts/testing/fixtures.py --program $(PARSER_PROBE) tests/fixtures/parser
 
+test-semantic: $(SEMANTIC_TEST)
+	$(SEMANTIC_TEST)
+
+test-semantic-fixtures: $(SEMANTIC_PROBE)
+	$(PYTHON) scripts/testing/fixtures.py --program $(SEMANTIC_PROBE) tests/fixtures/semantic
+
 test-python:
 	$(PYTHON) -m unittest discover -s tests/repository -v
 	$(PYTHON) -m unittest discover -s tests/testing -v
@@ -133,7 +175,8 @@ sanitize:
 	$(MAKE) BUILD_DIR=build/sanitize \
 	    CFLAGS="-O1 -g -fno-omit-frame-pointer -fsanitize=address,undefined -fno-sanitize-recover=all" \
 	    LDFLAGS="-fsanitize=address,undefined" test-foundation test-fixtures test-lexer \
-	    test-lexer-fixtures test-parser test-parser-fixtures
+	    test-lexer-fixtures test-parser test-parser-fixtures \
+	    test-semantic test-semantic-fixtures
 
 clean:
 	rm -rf build
@@ -142,3 +185,5 @@ clean:
 -include $(LEXER_OBJECTS:.o=.d) $(LEXER_TEST_OBJECTS:.o=.d) $(LEXER_PROBE_OBJECT:.o=.d)
 -include $(PARSER_OBJECTS:.o=.d)
 -include $(PARSER_TEST_OBJECTS:.o=.d) $(PARSER_PROBE_OBJECT:.o=.d)
+-include $(ANALYSIS_OBJECTS:.o=.d) $(SEMANTIC_PROBE_OBJECT:.o=.d)
+-include $(SEMANTIC_TEST_OBJECTS:.o=.d)

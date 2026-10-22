@@ -1,0 +1,9 @@
+{
+  "args": [
+    "input.ruv"
+  ],
+  "inputs": [
+    "input.ruv",
+    "parts/item.ruv"
+  ]
+}

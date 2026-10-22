@@ -1,0 +1,1 @@
+launch() { keep count: int = 010; vary ratio = 1.5; ratio = ratio + 0.5; show(count, ratio, true, "ok"); }

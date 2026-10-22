@@ -1,0 +1,3 @@
+craft first(n: int) -> int { give second(n); }
+craft second(n: int) -> int { check n == 0 { give 0; } otherwise { give first(n - 1); } }
+launch() { show(first(3)); }

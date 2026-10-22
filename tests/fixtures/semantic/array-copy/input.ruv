@@ -1,0 +1,4 @@
+launch() {
+    keep a = [1];
+    keep b = a;
+}

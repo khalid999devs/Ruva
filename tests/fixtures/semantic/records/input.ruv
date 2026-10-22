@@ -1,0 +1,3 @@
+object Item { switch: int; show: text; }
+craft copy(item: Item) -> Item { give item; }
+launch() { vary item = Item { show: "ok", switch: 1 }; keep other = copy(item); walk field in item { show(field.key, field.value); item.switch = 2; } }

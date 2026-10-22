@@ -1,0 +1,4 @@
+object Item { count: int; }
+launch() {
+    keep item = Item {};
+}

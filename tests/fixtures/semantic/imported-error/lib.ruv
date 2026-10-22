@@ -1,0 +1,2 @@
+share keep value = 1;
+craft invalid() -> void { show(missing); }

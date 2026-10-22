@@ -1,0 +1,2 @@
+bring { other } from "input.ruv";
+share keep value = 1;

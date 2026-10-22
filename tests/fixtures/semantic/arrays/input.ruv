@@ -1,0 +1,1 @@
+launch() { vary a: int[] = ([]); push(a, 2); a = [a[0], pop(a)]; walk x in a { a[0] = x; } show(length(a)); }
