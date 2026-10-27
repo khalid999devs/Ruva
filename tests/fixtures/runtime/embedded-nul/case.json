@@ -1,0 +1,7 @@
+{
+  "args": [
+    "nul"
+  ],
+  "stderr": "stderr.txt",
+  "exit": 1
+}

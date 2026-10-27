@@ -1,0 +1,7 @@
+{
+  "args": [
+    "remainder"
+  ],
+  "stderr": "stderr.txt",
+  "exit": 1
+}

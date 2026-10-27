@@ -1,0 +1,7 @@
+{
+  "args": [
+    "continuation"
+  ],
+  "stderr": "stderr.txt",
+  "exit": 1
+}

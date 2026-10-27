@@ -1,0 +1,7 @@
+{
+  "args": [
+    "input-read-error"
+  ],
+  "stderr": "stderr.txt",
+  "exit": 1
+}

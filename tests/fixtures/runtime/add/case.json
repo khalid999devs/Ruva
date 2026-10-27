@@ -1,0 +1,7 @@
+{
+  "args": [
+    "add"
+  ],
+  "stderr": "stderr.txt",
+  "exit": 1
+}

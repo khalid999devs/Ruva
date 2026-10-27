@@ -1,0 +1,7 @@
+{
+  "args": [
+    "too-high"
+  ],
+  "stderr": "stderr.txt",
+  "exit": 1
+}

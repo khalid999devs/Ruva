@@ -1,0 +1,7 @@
+{
+  "args": [
+    "array-length"
+  ],
+  "stderr": "stderr.txt",
+  "exit": 1
+}

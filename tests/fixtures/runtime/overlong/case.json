@@ -1,0 +1,7 @@
+{
+  "args": [
+    "overlong"
+  ],
+  "stderr": "stderr.txt",
+  "exit": 1
+}
