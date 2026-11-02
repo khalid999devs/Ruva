@@ -1,0 +1,6 @@
+launch() {
+    show(fileWrite("empty.txt", ""));
+    show("[" + fileRead("empty.txt") + "]");
+    keep handle = fileOpen("empty.txt", "read");
+    show("[" + fileReadFrom(handle) + "]");
+}

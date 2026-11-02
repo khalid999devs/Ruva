@@ -1,0 +1,1 @@
+launch() { show(ask(int), ask(int) + 1, ask(text)); }

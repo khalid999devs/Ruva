@@ -1,0 +1,6 @@
+low -2147483648
+zero -0
+large 1e+20
+small 0.10000000000000001
+infinity inf
+truth false

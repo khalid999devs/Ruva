@@ -1,0 +1,2 @@
+craft bound(tag: text, value: int) -> int { show(tag); give value; }
+launch() { vary stop = 3; walk index from bound("begin", 0) until bound("end", stop) { show(index); stop = 0; } walk unused from 3 until 2 { show("wrong"); } show("done"); }

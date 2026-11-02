@@ -1,0 +1,6 @@
+ +0008 
+ -.125E+2 
+	true
+  text %s 
+
+last

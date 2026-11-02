@@ -1,0 +1,5 @@
+launch() {
+    keep number = ask(int); keep decimal = ask(real); keep flag = ask(bool);
+    keep line = ask(text); keep empty = ask(text); keep last = ask(text);
+    show(number, decimal, flag); show("[" + line + "]", "[" + empty + "]", last);
+}

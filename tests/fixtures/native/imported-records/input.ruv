@@ -1,0 +1,8 @@
+bring { Item, make, identity } from "model.ruv";
+object Private { count: int; }
+launch() {
+    vary item: Item = identity(make("imported"));
+    item.name = item.name + "!";
+    walk field in item { show(field.key, field.value); }
+    show(Private { count: 9 }.count);
+}

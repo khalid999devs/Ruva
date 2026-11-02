@@ -1,0 +1,7 @@
+object Item { first: text; second: text; }
+craft first(item: Item) -> text {
+    vary local = item;
+    walk field in local { local.first = "changed"; give field.value; }
+    give "empty";
+}
+launch() { show(first(Item { first: "kept", second: "later" })); }

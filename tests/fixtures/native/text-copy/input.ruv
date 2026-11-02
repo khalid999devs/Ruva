@@ -1,0 +1,1 @@
+launch() { vary s = "before"; keep saved = s; s = s + " after"; s = s; { keep s = saved; show(s); } show(saved, s, "same" == "same", "x" != "y"); }

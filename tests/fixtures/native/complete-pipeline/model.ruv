@@ -1,0 +1,12 @@
+share object Result {
+    label: text;
+    total: int;
+    ok: bool;
+}
+craft factorial(value: int) -> int {
+    check value < 2 { give 1; }
+    otherwise { give value * factorial(value - 1); }
+}
+share craft make(label: text, total: int) -> Result {
+    give Result { ok: true, total: total + factorial(3), label: label + "!" };
+}

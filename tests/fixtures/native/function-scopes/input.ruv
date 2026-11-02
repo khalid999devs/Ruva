@@ -1,0 +1,3 @@
+craft main(switch: int) -> int { { keep switch = switch + 1; show(switch); } give switch; }
+craft rv_f_18(rv_t_1: real, unused: bool) -> real { give rv_t_1 + 0.5; }
+launch() { show(main(4), rv_f_18(1.25, true)); walk i from 0 until 2 { { keep i = i + 10; show(i); } show(i); } }

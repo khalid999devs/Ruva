@@ -1,0 +1,4 @@
+launch() {
+    vary items = [8, 0];
+    items[pop(items)] = pop(items);
+}

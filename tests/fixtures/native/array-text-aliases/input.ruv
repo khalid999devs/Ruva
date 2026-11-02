@@ -1,0 +1,9 @@
+launch() {
+    vary items = ["one", "two"];
+    keep saved = items[0];
+    items[0] = items[0] + "!";
+    push(items, items[0]);
+    keep last = pop(items);
+    items = [last, saved];
+    show(saved, last, items[0], items[1]);
+}

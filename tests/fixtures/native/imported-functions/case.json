@@ -1,0 +1,13 @@
+{
+  "args": [
+    "input.ruv"
+  ],
+  "inputs": [
+    "input.ruv",
+    "parts/left.ruv",
+    "parts/right.ruv",
+    "common.ruv"
+  ],
+  "stdout": "stdout.txt",
+  "timeout": 15
+}

@@ -1,0 +1,10 @@
+object Pair { first: text; second: int; }
+launch() {
+    keep pair = Pair { first: "outer", second: 4 };
+    walk outer in pair {
+        walk inner in Pair { first: "inner", second: 8 } {
+            show(outer.key, outer.value, inner.key, inner.value);
+        }
+        { walk outer in Pair { first: "shadow", second: 0 } { show(outer.value); } }
+    }
+}

@@ -1,0 +1,2 @@
+craft condition(tag: text, value: bool) -> bool { show(tag); give value; }
+launch() { show(false && condition("wrong", true), true || condition("wrong", false), true && condition("and", true), false || condition("or", false)); }

@@ -1,0 +1,4 @@
+launch() {
+    keep huge = toReal("1e308") * toReal("1e308");
+    show(toText(huge), toText(-huge), toText(huge - huge), toText(-0.0));
+}

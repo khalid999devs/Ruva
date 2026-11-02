@@ -1,0 +1,9 @@
+object Item { name: text; count: int; active: bool; ratio: real; }
+launch() {
+    vary item = Item { ratio: 1.25, active: true, count: 7, name: "entry" };
+    walk field in item {
+        item.name = "later"; item.count = 99; item.active = false; item.ratio = 4.5;
+        show((field).key, field.value);
+    }
+    show(item.name, item.count, item.active, item.ratio);
+}

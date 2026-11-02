@@ -1,0 +1,4 @@
+switch legal!
+show 9
+key true
+value 2.5

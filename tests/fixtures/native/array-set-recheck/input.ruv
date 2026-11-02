@@ -1,0 +1,1 @@
+launch() { vary items = [7]; items[0] = pop(items); }

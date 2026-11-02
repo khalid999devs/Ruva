@@ -1,0 +1,7 @@
+object Item { name: text; }
+craft repeat(item: Item, depth: int) -> Item {
+    keep local = item;
+    check depth == 0 { give local; }
+    otherwise { give repeat(local, depth - 1); }
+}
+launch() { show(repeat(Item { name: "returned" }, 8).name); }

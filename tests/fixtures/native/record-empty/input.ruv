@@ -1,0 +1,9 @@
+object Empty {}
+craft make() -> Empty { show("made"); give Empty {}; }
+craft identity(item: Empty) -> Empty { give item; }
+launch() {
+    vary item = identity(make()); item = item;
+    walk field in item { show("must not run", field.key); }
+    walk field in make() { show("must not run", field.value); }
+    show("done");
+}

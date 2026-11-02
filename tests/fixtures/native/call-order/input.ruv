@@ -1,0 +1,4 @@
+craft number(tag: text, n: int) -> int { show(tag); give n; }
+craft join(a: int, b: int) -> int { show("called"); give a + b; }
+craft word(tag: text) -> text { show(tag); give tag; }
+launch() { show(join(number("first", 1), number("second", 2)), word("third")); }

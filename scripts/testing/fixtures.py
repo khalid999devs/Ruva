@@ -83,6 +83,9 @@ def run_case(manifest_path, program):
     executable = Path(program).resolve()
     if not executable.is_file():
         raise FixtureError(f"Program does not exist: {executable}")
+    command = [str(executable)]
+    if executable.suffix == ".py":
+        command.insert(0, sys.executable)
 
     with tempfile.TemporaryDirectory(prefix="ruva-fixture-") as temporary:
         workspace = Path(temporary)
@@ -94,7 +97,7 @@ def run_case(manifest_path, program):
             shutil.copyfile(source, target)
         try:
             result = subprocess.run(
-                [str(executable), *arguments], cwd=workspace, input=stdin,
+                [*command, *arguments], cwd=workspace, input=stdin,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=timeout,
             )
         except subprocess.TimeoutExpired as error:

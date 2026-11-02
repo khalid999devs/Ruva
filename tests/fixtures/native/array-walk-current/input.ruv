@@ -1,0 +1,11 @@
+launch() {
+    vary items = ["one", "two", "three"];
+    vary index = 0;
+    walk item in (items) {
+        items[index] = "changed";
+        check index == 0 { items[1] = "future"; }
+        show(item);
+        index = index + 1;
+    }
+    show(items[0], items[1], items[2]);
+}

@@ -1,0 +1,11 @@
+Start:
+run
+future
+tail true 4
+true true true
+label=run!
+total=18
+ok=true
+END
+
+true true true

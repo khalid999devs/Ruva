@@ -1,0 +1,1 @@
+launch() { keep handle = fileOpen("note.txt", "write"); fileClose(handle); fileClose(handle); }

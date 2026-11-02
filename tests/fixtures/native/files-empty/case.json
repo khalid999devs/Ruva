@@ -1,0 +1,13 @@
+{
+  "args": [
+    "input.ruv"
+  ],
+  "inputs": [
+    "input.ruv"
+  ],
+  "stdout": "stdout.txt",
+  "timeout": 20,
+  "files": {
+    "empty.txt": "expected.txt"
+  }
+}

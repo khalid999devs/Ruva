@@ -1,0 +1,2 @@
+craft identity(value: text) -> text { give value; }
+launch() { vary result = ""; vary count = 0; walk i from 0 until 10000 { keep copy = result; result = identity(copy) + "x"; count = count + 1; } show(count, result == ""); }

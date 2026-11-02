@@ -1,0 +1,7 @@
+craft first() -> text {
+    vary items = ["kept", "later"];
+    walk item in items { items[0] = "changed"; give item; }
+    give "empty";
+}
+craft literal() -> text { walk item in ["literal"] { give item; } give "empty"; }
+launch() { show(first(), literal()); }

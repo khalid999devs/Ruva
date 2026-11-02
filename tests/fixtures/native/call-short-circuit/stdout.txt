@@ -1,0 +1,3 @@
+and
+or
+false true true false

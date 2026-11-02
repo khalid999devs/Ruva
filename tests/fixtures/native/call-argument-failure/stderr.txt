@@ -1,0 +1,1 @@
+input.ruv:2:24: error: division by zero

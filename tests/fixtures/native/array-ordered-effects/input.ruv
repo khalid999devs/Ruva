@@ -1,0 +1,9 @@
+craft mark(value: int) -> int { show(value); give value; }
+launch() {
+    vary items = [mark(1), mark(2), mark(3)];
+    push(items, pop(items));
+    show(pop(items), pop(items), length(items));
+    vary indices = [0];
+    items[pop(indices)] = mark(9);
+    show(items[0], length(indices));
+}

@@ -1,0 +1,8 @@
+object Pair { first: text; second: text; }
+launch() {
+    vary pair = Pair { first: "one", second: "two" };
+    walk field in pair {
+        pair = Pair { first: "new", second: "later" };
+        show(field.key, field.value);
+    }
+}

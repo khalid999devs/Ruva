@@ -1,0 +1,2 @@
+craft classify(n: int) -> text { choose n { when 0 => { give "zero"; } when 1 => { give "one"; } otherwise => { give "other"; } } }
+launch() { show(classify(0), classify(1), classify(2)); }

@@ -1,0 +1,1 @@
+launch() { walk i from 2147483646 until 2147483647 { show(i); } walk i from 2147483647 until 2147483647 { show("wrong"); } walk i from -2147483648 until -2147483646 { show(i); } }

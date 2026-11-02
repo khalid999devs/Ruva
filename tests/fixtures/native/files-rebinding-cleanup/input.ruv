@@ -1,0 +1,7 @@
+launch() {
+    vary handle = fileOpen("note.txt", "write");
+    fileWriteTo(handle, "first");
+    handle = (fileOpen("note.txt", "append"));
+    fileWriteTo(handle, " second");
+    give;
+}

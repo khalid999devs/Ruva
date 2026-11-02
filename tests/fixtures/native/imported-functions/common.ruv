@@ -1,0 +1,1 @@
+share craft suffix() -> text { give "!"; }

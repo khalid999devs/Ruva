@@ -1,0 +1,1 @@
+launch() { show(false && 1 / 0 == 0, true || 1 / 0 == 0, true && 1 == 1, false || 2 == 2); }

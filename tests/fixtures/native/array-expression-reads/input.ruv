@@ -1,0 +1,7 @@
+launch() {
+    vary items = [1, 2];
+    items[0] = pop(items); show(items[0], length(items));
+    vary words = ["one", "two"];
+    words[0] = pop(words); show(words[0], length(words));
+    show(["temporary"][0], length([1, 2, 3]));
+}

@@ -1,0 +1,2 @@
+craft number(n: int) -> int { give n; }
+launch() { show(number(1 / 0)); }

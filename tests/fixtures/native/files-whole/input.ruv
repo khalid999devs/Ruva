@@ -1,0 +1,6 @@
+launch() {
+    show(fileExists("note.txt"), fileExists("."));
+    show(fileWrite("note.txt", "first\r\n"), fileAppend("note.txt", "বাংলা\n"));
+    show(fileExists("note.txt")); show(fileRead("note.txt"));
+    show(fileWrite("missing/child.txt", "x"), fileAppend(".", "x"));
+}

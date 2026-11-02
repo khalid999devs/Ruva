@@ -1,0 +1,7 @@
+launch() {
+    show(toInt(3.9), toInt(-3.9), toInt(" +0008 "), toInt("-2147483648"));
+    show(toInt(2147483647.75), toInt(-2147483648.75), toInt(-0.75));
+    show(toReal(2147483647), toReal("+.5e+2"), toReal("1."), toReal("-0"));
+    show(toText(-2147483648), toText(0.1), toText(true), toText(false));
+    show(toBool(" \ttrue\r\n"), toBool("false"));
+}

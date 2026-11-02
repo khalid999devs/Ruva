@@ -1,0 +1,10 @@
+launch() {
+    vary items = [1, 2, 3];
+    items = ([pop(items), items[0], length(items)]);
+    walk item in items { show(item); }
+    items = []; show(length(items));
+    vary words = ["first", "last"];
+    words = [words[0] + "!", pop(words), words[0]];
+    show(words[0], words[1], words[2]);
+    words = []; show(length(words));
+}

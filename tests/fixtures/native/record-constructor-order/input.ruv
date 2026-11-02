@@ -1,0 +1,7 @@
+object Pair { first: int; second: int; label: text; }
+craft mark(value: int) -> int { show(value); give value; }
+craft word() -> text { show("word"); give "pair"; }
+launch() {
+    keep pair = Pair { second: mark(2), label: word(), first: mark(1) };
+    show(pair.first, pair.second, pair.label);
+}

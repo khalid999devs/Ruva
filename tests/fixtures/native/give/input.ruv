@@ -1,0 +1,1 @@
+launch() { vary s = "live"; { keep copy = s; show(copy); give; } show("unreachable"); }

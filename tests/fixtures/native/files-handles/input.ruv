@@ -1,0 +1,9 @@
+launch() {
+    keep output = fileOpen("note.txt", "write");
+    show(fileWriteTo(output, "one\r\n"), fileWriteTo(output, "two"), fileClose(output));
+    keep append = fileOpen("note.txt", "append");
+    show(fileWriteTo(append, "!"), fileClose(append));
+    keep input = fileOpen("note.txt", "read");
+    show(fileReadFrom(input)); show("[" + fileReadFrom(input) + "]");
+    show(fileClose(input));
+}

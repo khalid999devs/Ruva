@@ -1,0 +1,2 @@
+craft selector() -> int { show("selector"); give 08; }
+launch() { vary state = 0; choose selector() { when 0 => { state = 1; } when 08 => { state = 2; } when 9 => { state = 3; } otherwise => { state = 4; } } show(state); choose 99 { when 0 => { show("wrong"); } otherwise => { show("default"); } } }

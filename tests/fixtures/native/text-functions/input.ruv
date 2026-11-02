@@ -1,0 +1,3 @@
+craft identity(value: text) -> text { give value; }
+craft build(value: text, n: int) -> text { check n == 0 { keep local = value + "!"; give local; } otherwise { give build(value, n - 1); } }
+launch() { vary value = "kept"; keep copy = identity(value); value = build(value, 4); show(copy, value, identity(identity("nested"))); }

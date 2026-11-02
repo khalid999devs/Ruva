@@ -1,0 +1,12 @@
+launch() {
+    vary ints: int[] = [];
+    push(ints, 10); push(ints, -2);
+    vary reals = [1.5, 2.5];
+    vary flags = [true, false];
+    vary words: text[] = [];
+    push(words, "বাংলা"); push(words, "tail");
+    reals[0] = 3.25; flags[1] = true;
+    show(length(ints), ints[0], pop(ints), length(ints));
+    show(reals[0], pop(reals), flags[0], pop(flags));
+    show(words[0], pop(words), length(words));
+}

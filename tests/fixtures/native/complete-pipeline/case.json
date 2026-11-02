@@ -1,0 +1,15 @@
+{
+  "args": [
+    "input.ruv"
+  ],
+  "inputs": [
+    "input.ruv",
+    "model.ruv"
+  ],
+  "stdin": "stdin.txt",
+  "stdout": "stdout.txt",
+  "files": {
+    "result.txt": "expected.txt"
+  },
+  "timeout": 20
+}

@@ -1,0 +1,2 @@
+craft invalid(value: text) -> int { keep copy = value; give 1 / 0; }
+launch() { show(invalid("live")); }

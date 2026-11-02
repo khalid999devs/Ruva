@@ -1,0 +1,2 @@
+craft condition(value: bool) -> bool { show("condition"); give value; }
+launch() { check condition(false) { show("wrong"); } otherwise { check true { show("selected"); } otherwise { show("wrong"); } } }

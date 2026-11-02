@@ -1,0 +1,3 @@
+craft selector() -> text { show("evaluated"); give "value"; }
+craft fallback(value: text) -> text { choose value { otherwise => { give value + "!"; } } }
+launch() { choose selector() {} choose 1 {} show(fallback("default")); }

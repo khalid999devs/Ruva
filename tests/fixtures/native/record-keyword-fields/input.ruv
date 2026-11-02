@@ -1,0 +1,6 @@
+object Data { switch: text; show: int; key: bool; value: real; }
+launch() {
+    vary item = Data { value: 2.5, key: true, show: 7, switch: "legal" };
+    item.show = 9; item.switch = item.switch + "!";
+    walk field in item { show(field.key, field.value); }
+}

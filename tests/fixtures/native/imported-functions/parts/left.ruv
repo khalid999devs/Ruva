@@ -1,0 +1,1 @@
+bring { suffix } from "../common.ruv"; craft helper() -> text { give "left"; } share craft left() -> text { give helper() + suffix(); }

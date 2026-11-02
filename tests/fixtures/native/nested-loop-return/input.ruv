@@ -1,0 +1,2 @@
+craft select(value: text) -> text { keep outer = value + "!"; walk i from 0 until 2 { keep loop_copy = outer; during true { choose loop_copy { when "ok!" => { keep result = loop_copy + " selected"; give result; } otherwise => { give loop_copy; } } } } give "empty"; }
+launch() { show(select("ok"), select("other")); }

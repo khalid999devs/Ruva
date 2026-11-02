@@ -1,0 +1,1 @@
+launch() { show("percent %s\n\tquote \" slash \\ বাংলা 😀"); }

@@ -1,0 +1,1 @@
+bring { left } from "parts/left.ruv"; bring { right } from "parts/right.ruv"; launch() { show(left(), right()); }

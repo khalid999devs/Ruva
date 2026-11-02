@@ -1,0 +1,5 @@
+name entry
+count 7
+active true
+ratio 1.25
+later 99 false 4.5

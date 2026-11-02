@@ -1,0 +1,10 @@
+launch() {
+    vary items = [1, 2];
+    walk outer in items {
+        walk inner in items { show(outer, inner); }
+        { vary items = [9]; push(items, 10); show(pop(items)); }
+    }
+    walk item in ["a", "b"] { show(item); }
+    keep empty: bool[] = [];
+    walk item in empty { show("unreachable"); }
+}

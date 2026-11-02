@@ -1,0 +1,11 @@
+{
+  "args": [
+    "input.ruv"
+  ],
+  "inputs": [
+    "input.ruv",
+    "model.ruv"
+  ],
+  "stdout": "stdout.txt",
+  "timeout": 15
+}

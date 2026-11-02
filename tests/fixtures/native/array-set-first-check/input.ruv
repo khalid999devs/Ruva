@@ -1,0 +1,2 @@
+craft rhs() -> int { show("must not run"); give 9; }
+launch() { vary items = [1]; items[2] = rhs(); }

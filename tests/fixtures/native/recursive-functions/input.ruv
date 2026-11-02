@@ -1,0 +1,4 @@
+craft factorial(n: int) -> int { check n <= 1 { give 1; } otherwise { give n * factorial(n - 1); } }
+craft even(n: int) -> bool { check n == 0 { give true; } otherwise { give odd(n - 1); } }
+craft odd(n: int) -> bool { check n == 0 { give false; } otherwise { give even(n - 1); } }
+launch() { show(factorial(5), even(10), odd(9), (factorial)(0)); }

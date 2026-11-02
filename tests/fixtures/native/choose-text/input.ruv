@@ -1,0 +1,2 @@
+craft selector() -> text { show("selector"); give "বাংলা"; }
+launch() { vary value = "before"; choose selector() { when "other" => {} when "বাংলা" => { value = "after"; show(value); } otherwise => { show("wrong"); } } choose "a\nb" { when "a\nb" => { show("escaped"); } } }

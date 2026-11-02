@@ -1,0 +1,7 @@
+share object Item { name: text; count: int; }
+object Private { name: text; }
+craft private_name(item: Private) -> text { give item.name; }
+share craft make(name: text) -> Item {
+    give Item { count: 7, name: private_name(Private { name: name }) };
+}
+share craft identity(item: Item) -> Item { give item; }

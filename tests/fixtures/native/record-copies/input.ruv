@@ -1,0 +1,13 @@
+object Item { name: text; count: int; }
+craft rename(item: Item) -> Item { vary copy = item; copy.name = "copy"; give copy; }
+craft identity(item: Item) -> Item { give item; }
+launch() {
+    vary original = Item { name: "original", count: 1 };
+    vary copy = original;
+    copy.name = copy.name + "!"; copy.count = 2;
+    show(original.name, original.count, copy.name, copy.count);
+    copy = identity(copy); original = original;
+    show(rename(original).name, original.name, copy.name);
+    copy = original; original.name = "new";
+    show(copy.name, original.name);
+}

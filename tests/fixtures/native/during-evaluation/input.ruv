@@ -1,0 +1,2 @@
+craft condition(n: int) -> bool { show(n); give n < 3; }
+launch() { vary n = 0; during condition(n) { n = n + 1; } during condition(5) { show("wrong"); } show("done"); }

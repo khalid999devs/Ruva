@@ -1,0 +1,3 @@
+object Item { name: text; count: int; }
+craft make() -> Item { show("once"); give Item { name: "made", count: 3 }; }
+launch() { walk field in (make()) { show(field.key, field.value); } }

@@ -2,6 +2,7 @@
 #include "compiler/common/memory/arena.h"
 #include "compiler/common/source/source.h"
 #include "compiler/common/diagnostics/diagnostic.h"
+#include "compiler/common/host/streams.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -70,6 +71,9 @@ static int copy_input(void) {
 }
 
 int main(int argc, char **argv) {
+    if (!rv_host_initialize_streams()) {
+        return EXIT_FAILURE;
+    }
     if (argc == 3 && (strcmp(argv[1], "inspect") == 0 || strcmp(argv[1], "diagnostic") == 0)) {
         return inspect_source(argv[2], strcmp(argv[1], "diagnostic") == 0);
     }

@@ -1,0 +1,31 @@
+bring { Result, make } from "model.ruv";
+launch() {
+    show("Start:");
+    keep seed = ask(int);
+    keep label = ask(text);
+    vary numbers = [seed, seed + 1];
+    push(numbers, seed + 2);
+    vary total = 0;
+    walk number in numbers { total = total + number; }
+    vary result = make(label, total);
+    vary words = [label, "tail"];
+    keep saved = pop(words);
+    push(words, saved);
+    walk word in words {
+        words[0] = "changed";
+        words[1] = "future";
+        show(word);
+    }
+    show(saved, toBool(" true "), toInt(toReal("4.9")));
+    vary report = "";
+    walk field in result {
+        result.label = "changed";
+        result.total = 0;
+        report = report + field.key + "=" + field.value + "\n";
+    }
+    keep output = fileOpen("result.txt", "write");
+    show(fileWriteTo(output, report), fileWriteTo(output, "END\n"), fileClose(output));
+    keep input = fileOpen("result.txt", "read");
+    show(fileReadFrom(input));
+    show(fileReadFrom(input) == "", fileClose(input), fileExists("result.txt"));
+}

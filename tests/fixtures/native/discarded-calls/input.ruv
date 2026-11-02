@@ -1,0 +1,6 @@
+craft unused(value: text) -> void {}
+craft forever() -> void { forever(); }
+craft scalar() -> int { give 1; }
+craft text_value() -> text { give "discarded"; }
+craft empty() -> void {}
+launch() { scalar(); text_value(); empty(); show("done"); }
