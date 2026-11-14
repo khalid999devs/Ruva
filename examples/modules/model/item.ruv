@@ -1,0 +1,6 @@
+share object Item {
+    name: text;
+    score: int;
+}
+
+share keep pass_score = 40;

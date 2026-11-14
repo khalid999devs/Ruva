@@ -1,0 +1,32 @@
+object Reading {
+    label: text;
+    value: real;
+    valid: bool;
+}
+
+craft rename(reading: Reading, label: text) -> Reading {
+    vary copy = reading;
+    copy.label = label;
+    give copy;
+}
+
+launch() {
+    vary values = [2.5, 4.0];
+    push(values, 5.5);
+
+    vary total = 0.0;
+    walk value in values {
+        total = total + value;
+    }
+    show(total, length(values));
+
+    keep reading = rename(Reading {
+        label: "initial",
+        value: total,
+        valid: true
+    }, "sample");
+
+    walk field in reading {
+        show(field.key, field.value);
+    }
+}

@@ -1,0 +1,12 @@
+launch() {
+    show("Message:");
+    keep message = ask(text);
+    keep output = fileOpen("message.txt", "write");
+
+    keep first = fileWriteTo(output, message + "\r\n");
+    keep second = fileWriteTo(output, toText(toInt(" +8 ")));
+    keep closed = fileClose(output);
+    show(first && second && closed);
+
+    show(fileRead("message.txt"));
+}

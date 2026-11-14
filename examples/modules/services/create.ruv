@@ -1,0 +1,9 @@
+bring { Item } from "../model/item.ruv";
+
+craft helper(score: int) -> int {
+    give score + 2;
+}
+
+share craft make(name: text, score: int) -> Item {
+    give Item { name: name, score: helper(score) };
+}

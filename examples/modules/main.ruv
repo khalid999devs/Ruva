@@ -1,0 +1,8 @@
+bring { Item } from "model/item.ruv";
+bring { make } from "services/create.ruv";
+bring { describe } from "services/render.ruv";
+
+launch() {
+    keep item: Item = make("Asha", 40);
+    show(describe(item));
+}

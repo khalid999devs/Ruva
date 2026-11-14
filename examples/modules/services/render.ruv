@@ -1,0 +1,13 @@
+bring { Item, pass_score } from "../model/./item.ruv";
+
+craft helper(score: int) -> text {
+    check score >= pass_score {
+        give "pass";
+    } otherwise {
+        give "retry";
+    }
+}
+
+share craft describe(item: Item) -> text {
+    give item.name + ": " + toText(item.score) + " (" + helper(item.score) + ")";
+}
