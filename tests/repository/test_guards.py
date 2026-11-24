@@ -17,6 +17,8 @@ class RepositoryGuardTests(unittest.TestCase):
             shutil.copy2(ROOT / name, self.root / name)
         for name in (".githooks", "scripts"):
             shutil.copytree(ROOT / name, self.root / name)
+        for hook in (self.root / ".githooks").iterdir():
+            hook.chmod(0o755)
         self.git("init", "--quiet", "--initial-branch=main")
         for key, value in (
             ("user.name", "Repository Guard Tests"),
