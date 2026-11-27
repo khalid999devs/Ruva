@@ -152,7 +152,7 @@ main.ruv:3:10: error: integer overflow
 1
 ```
 
-The line and column point at the expression that failed. The program exits with status 1. The error message goes to standard error, so you still see it when normal output is redirected to a file. If the failing code is in a module, the message names that module's file.
+The line and column point at the expression that failed. The program exits with status 1. The error message goes to standard error, so you still see it when normal output is redirected to a file. Earlier normal output is flushed before the diagnostic, so combining the streams with `2>&1` preserves their order when writes succeed. If the failing code is in a module, the message names that module's file.
 
 | Message | What went wrong |
 | --- | --- |
