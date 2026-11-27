@@ -37,6 +37,8 @@ void rv_runtime_init(RvRuntime *runtime, FILE *output, FILE *errors) {
 }
 
 void rv_report_error(RvRuntime *runtime, const char *message, RvLocation where) {
+    /* Preserve the original diagnostic even if flushing output fails. */
+    (void)fflush(runtime->output);
     const char *path = where.path == NULL ? "<runtime>" : where.path;
     if (where.line != 0) {
         fprintf(runtime->errors, "%s:%zu:%zu: error: %s\n", path, where.line, where.column, message);

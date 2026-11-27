@@ -9,6 +9,15 @@ class InputOutputTests(ObservedCompilerTestCase):
         return subprocess.run([str(executable)], cwd=self.directory, input=data,
                               capture_output=True, timeout=15)
 
+    def test_prior_output_precedes_runtime_error_in_combined_stream(self):
+        self.source.write_text('launch() { vary zero = 0; show("before"); show(10 / zero); }')
+        executable = self.compile()
+        result = subprocess.run([str(executable)], cwd=self.directory,
+                                stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=15)
+        self.assertEqual(result.returncode, 1, result.stdout)
+        self.assertTrue(result.stdout.startswith(b"before\n"), result.stdout)
+        self.assertIn(b"error: division by zero", result.stdout)
+
     def test_numeric_text_rejects_invalid_spellings_and_ranges(self):
         cases = {
             "toInt": [b"", b"+", b"-", b"1.0", b"1e2", b"0x10", b"12junk", b"1 2",
