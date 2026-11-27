@@ -1,6 +1,6 @@
 # Workflow and code style
 
-This page covers how the code is written, the rules the repository enforces, how to write commit messages and what a pull request needs before it is merged. It also explains what is in and out of scope now that the language is at version 1.0.
+This page covers how the code is written, the rules the repository enforces, how to write commit messages and what a pull request needs before it is merged. It also explains how to propose changes to the language itself.
 
 ## Code style
 
@@ -95,11 +95,13 @@ Before you open a pull request, go through this list:
 
 Small pull requests are reviewed faster. One fix or one improvement per pull request is ideal.
 
-## The language is frozen at 1.0
+## Growing the language
 
-Ruva 1.0 is a complete language. Its syntax, keywords and built-in functions are fixed, so pull requests that add new syntax, new keywords or new built-ins will not be merged, however good the idea is.
+Ruva is at version 1.0 and it is still growing. Nothing is out of scope. New syntax, new keywords, new built-in functions and new types are all welcome, along with improvements to the compiler, the runtime, error messages, tests, documentation, examples, platform support and the build.
 
-Everything else is open. Improvements to the compiler, the runtime, error messages, tests, documentation, examples, platform support and the build are all welcome. If `ruvac` rejects a program that the [syntax reference](../reference/syntax.md) says is valid, or accepts one it says is invalid, that is a bug, and fixing it is in scope.
+A language change touches every stage, from the lexer and parser to the type checker, the C generator, the runtime, the tests and these docs. Before you start one, open an issue that shows the new syntax with a small example program and what it should print. Agreeing on the design first saves you from rewriting a large pull request.
+
+If `ruvac` rejects a program that the [syntax reference](../reference/syntax.md) says is valid, or accepts one it says is invalid, that is a bug, and a fix is always welcome.
 
 ## Good first contributions
 

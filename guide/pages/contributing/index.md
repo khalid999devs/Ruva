@@ -21,8 +21,9 @@ The whole compiler is around 8,000 lines, and the runtime that ships with every 
 | Examples | Short, readable programs in `examples/` that show a feature in use |
 | Bug fixes | A program that crashes `ruvac`, produces C that fails to build, or prints the wrong result |
 | Platform support | Building with other compilers and Linux distributions, or running the Windows build on real hardware |
+| Language features | New syntax, keywords, built-in functions or types, discussed in an issue first |
 
-The language itself is frozen at version 1.0, so new syntax, keywords and built-in functions are out of scope. Everything around the language is open. [Workflow](workflow.md#the-language-is-frozen-at-10) explains where that line sits.
+Nothing is out of scope. Ruva is at version 1.0 and the language itself can grow as it needs to. [Growing the language](workflow.md#growing-the-language) explains how to propose a change.
 
 ## From clone to first pull request
 
