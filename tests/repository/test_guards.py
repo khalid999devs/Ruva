@@ -152,6 +152,23 @@ class RepositoryGuardTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("docs/development/fixture has 7 files", result.stderr)
 
+    def test_root_license_is_not_counted(self):
+        for index in range(4):
+            (self.root / f"file_{index}.txt").touch()
+        (self.root / "LICENSE").touch()
+        result = self.layout()
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_license_outside_root_still_counts(self):
+        directory = self.root / "compiler" / "driver"
+        directory.mkdir(parents=True)
+        for index in range(6):
+            (directory / f"file_{index}.c").touch()
+        (directory / "LICENSE").touch()
+        result = self.layout()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("compiler/driver has 7 files", result.stderr)
+
     def test_generated_output_is_excluded(self):
         directory = self.root / "build"
         directory.mkdir()

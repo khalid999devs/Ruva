@@ -1,0 +1,102 @@
+site_name: Ruva
+site_description: A small statically typed programming language with a native compiler written in C.
+site_url: https://khalid999devs.github.io/Ruva/
+repo_url: https://github.com/khalid999devs/Ruva
+repo_name: khalid999devs/Ruva
+edit_uri: edit/main/guide/pages/
+copyright: Ruva is released under the MIT License.
+
+docs_dir: pages
+site_dir: ../build/site
+
+theme:
+  name: material
+  logo: assets/logo.svg
+  favicon: assets/logo.svg
+  font:
+    text: Inter
+    code: JetBrains Mono
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.footer
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.action.edit
+  icon:
+    repo: fontawesome/brands/github
+
+extra_css:
+  - assets/extra.css
+
+extra_javascript:
+  - assets/ruva.js
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight:
+      pygments_lang_class: true
+      extend_pygments_lang:
+        - name: ruva
+          lang: text
+  - pymdownx.inlinehilite
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+
+nav:
+  - Home: index.md
+  - Get started:
+      - Install: start/install.md
+      - Your first program: start/first-program.md
+      - Using ruvac: start/compiler.md
+  - Language:
+      - Basics:
+          - Program structure: basics/program.md
+          - Values and types: basics/values.md
+          - Variables: basics/variables.md
+          - Operators: basics/operators.md
+      - Control flow:
+          - Decisions: flow/decisions.md
+          - Loops: flow/loops.md
+          - Functions: flow/functions.md
+      - Collections:
+          - Arrays: data/arrays.md
+          - Records: data/records.md
+      - Bigger programs:
+          - Modules: programs/modules.md
+          - Input and files: programs/input-and-files.md
+          - Errors: programs/errors.md
+  - Reference:
+      - Keywords: reference/keywords.md
+      - Built-in functions: reference/builtins.md
+      - Syntax: reference/syntax.md
+  - Contributing:
+      - Start here: contributing/index.md
+      - Architecture: contributing/architecture.md
+      - Building: contributing/building.md
+      - Testing: contributing/testing.md
+      - Workflow: contributing/workflow.md

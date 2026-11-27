@@ -12,6 +12,7 @@ GENERATED_DIRECTORIES = {
     ".mypy_cache", ".ruff_cache", ".idea", ".vscode",
 }
 ROOT_OUTPUT_DIRECTORIES = {"build", "bin", "out", "dist", "coverage"}
+ROOT_METADATA_FILES = {"LICENSE"}
 SYSTEM_FILES = {".DS_Store", "Thumbs.db"}
 
 
@@ -20,10 +21,12 @@ def find_overfull_directories():
     for directory, children, files in os.walk(ROOT, followlinks=False):
         current = Path(directory)
         excluded = GENERATED_DIRECTORIES.copy()
+        skipped = SYSTEM_FILES.copy()
         if current == ROOT:
             excluded.update(ROOT_OUTPUT_DIRECTORIES)
+            skipped.update(ROOT_METADATA_FILES)
         children[:] = sorted(name for name in children if name not in excluded)
-        project_files = sorted(name for name in files if name not in SYSTEM_FILES)
+        project_files = sorted(name for name in files if name not in skipped)
         if len(project_files) > FILE_LIMIT:
             location = current.relative_to(ROOT).as_posix()
             violations.append((location, len(project_files)))

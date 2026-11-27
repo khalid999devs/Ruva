@@ -3,16 +3,25 @@
 </p>
 
 <p align="center">
+  <a href="https://khalid999devs.github.io/Ruva/"><img src="https://img.shields.io/badge/docs-khalid999devs.github.io%2FRuva-4338CA" alt="Documentation"></a>
   <img src="https://img.shields.io/badge/written%20in-C11-2DD4BF" alt="Written in C11">
-  <img src="https://img.shields.io/badge/lexer-Flex-8B5CF6" alt="Flex lexer">
   <img src="https://img.shields.io/badge/platforms-macOS%20%7C%20Linux-64748B" alt="macOS and Linux">
   <img src="https://img.shields.io/badge/tests-177%20programs%20passing-34D399" alt="177 test programs passing">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-8B5CF6" alt="MIT License"></a>
 </p>
 
-Ruva is a small statically typed programming language with its own compiler, `ruvac`. The compiler reads `.ruv` files, checks them, turns them into C and builds a native executable with GCC or Clang.
+<p align="center">
+  <a href="https://khalid999devs.github.io/Ruva/"><b>Documentation</b></a> ·
+  <a href="https://khalid999devs.github.io/Ruva/start/install/">Install</a> ·
+  <a href="https://khalid999devs.github.io/Ruva/basics/program/">Language tour</a> ·
+  <a href="https://khalid999devs.github.io/Ruva/reference/builtins/">Built-ins</a> ·
+  <a href="https://khalid999devs.github.io/Ruva/contributing/">Contributing</a>
+</p>
+
+Ruva is a small statically typed programming language with its own compiler, `ruvac`. The compiler reads `.ruv` files, checks them, turns them into C and builds a native executable with GCC or Clang. Install it once and use it from any folder, the same way you use `gcc`.
 
 <p align="center">
-  <img src=".github/assets/demo.gif" alt="Building Ruva and running the examples" width="760">
+  <img src=".github/assets/install.gif" alt="Installing ruvac, writing a program and compiling it" width="760">
 </p>
 
 ## Features
@@ -26,57 +35,61 @@ Ruva is a small statically typed programming language with its own compiler, `ru
 - Typed keyboard input, conversions and file operations
 - Checked integer arithmetic and errors that point to the exact line and column
 
-## Quick start
+## Install
 
-You need a C11 compiler (GCC or Clang), Flex, Make and Python 3.9 or later.
+You need a C11 compiler (GCC or Clang), Flex, Make and Git. Python 3.9 or later is only needed for the tests.
 
 ```sh
 git clone https://github.com/khalid999devs/Ruva.git
 cd Ruva
 make
-export PATH="$PWD/build/debug/bin:$PATH"
+sudo ln -s "$PWD/build/debug/bin/ruvac" /usr/local/bin/ruvac
 ```
 
-Now `ruvac` works from any folder.
+`ruvac` now works from any folder. Keep the cloned folder, since the compiler uses the runtime sources inside it. To install without `sudo`, see the [install guide](https://khalid999devs.github.io/Ruva/start/install/).
+
+## Write and compile a program
 
 ```sh
-cd examples/hello
-ruvac main.ruv
-./a.out
+mkdir ~/hello && cd ~/hello
 ```
 
-This prints `Hello from Ruva`.
-
-## A taste of Ruva
+Save this as `main.ruv`:
 
 ```
-craft factorial(n: int) -> int {
-    check n <= 1 {
-        give 1;
-    } otherwise {
-        give n * factorial(n - 1);
-    }
-}
-
-craft repeat(word: text, count: int) -> text {
-    vary result = "";
-
-    walk index from 0 until count {
-        result = result + word;
-    }
-
-    give result;
+craft square(n: int) -> int {
+    give n * n;
 }
 
 launch() {
-    show(factorial(5), repeat("ru", 3));
+    show("7 squared is", square(7));
 }
 ```
 
+```sh
+ruvac main.ruv -o square
+./square
 ```
-$ ruvac main.ruv && ./a.out
-120 rururu
+
 ```
+7 squared is 49
+```
+
+## Examples
+
+The repository comes with working programs in [`examples`](examples).
+
+<p align="center">
+  <img src=".github/assets/demo.gif" alt="Compiling and running the Ruva examples" width="760">
+</p>
+
+| Example | What it shows | Output |
+| --- | --- | --- |
+| [`hello`](examples/hello/main.ruv) | Entry point and `show` | `Hello from Ruva` |
+| [`functions`](examples/functions/main.ruv) | Recursion and a counted loop | `120 rururu` |
+| [`collections`](examples/collections/main.ruv) | Arrays, records and walks | `12 3` and the record fields |
+| [`io`](examples/io/main.ruv) | Keyboard input and file writing | Writes and reads `message.txt` |
+| [`modules`](examples/modules/main.ruv) | Four files sharing a record | `Asha: 42 (pass)` |
 
 ## Using the compiler
 
@@ -89,16 +102,6 @@ ruvac --sanitize main.ruv -o app        # build with AddressSanitizer and UBSan
 ```
 
 A successful compile prints nothing, and errors show the file, line and column. For a program split into modules, compile only the entry file and `ruvac` follows its `bring` imports.
-
-## Examples
-
-| Example | What it shows | Output |
-| --- | --- | --- |
-| [`hello`](examples/hello/main.ruv) | Entry point and `show` | `Hello from Ruva` |
-| [`functions`](examples/functions/main.ruv) | Recursion and a counted loop | `120 rururu` |
-| [`collections`](examples/collections/main.ruv) | Arrays, records and walks | `12 3` and the record fields |
-| [`io`](examples/io/main.ruv) | Keyboard input and file writing | Writes and reads `message.txt` |
-| [`modules`](examples/modules/main.ruv) | Four files sharing a record | `Asha: 42 (pass)` |
 
 ## How it works
 
@@ -118,58 +121,15 @@ A successful compile prints nothing, and errors show the file, line and column. 
 ## Testing
 
 ```sh
-make test       # 7 C suites, 177 program fixtures and 76 Python tests
-make sanitize   # the same checks with AddressSanitizer and UBSan
+make test       # C suites, 177 program fixtures and the Python tooling tests
+make sanitize   # the C and program tests with AddressSanitizer and UBSan
 make clean
 ```
 
-<details>
-<summary>Build options</summary>
+## Contributing
 
-<br>
+Ruva is a learning project and contributions are welcome. The whole compiler, from the Flex lexer to the C generator and the runtime, is small enough to read end to end, so fixing an error message, adding a test or improving the docs is a good way to learn how compilers work. Start with the [contributor guide](https://khalid999devs.github.io/Ruva/contributing/), and feel free to open an issue with questions.
 
-Pick the compiler and flags with a separate output folder for each setup.
+## License
 
-```sh
-make CC=clang BUILD_DIR=build/clang test
-make CC=gcc BUILD_DIR=build/gcc CFLAGS="-O2 -g" test
-```
-
-Native builds use the runtime sources from this checkout. The driver finds them next to its executable, or through `RUVA_RUNTIME_ROOT` pointing at the `runtime` folder.
-
-</details>
-
-<details>
-<summary>Windows</summary>
-
-<br>
-
-A Windows x64 build with [MSYS2 UCRT64](https://www.msys2.org/docs/environments/) GCC is prepared and its build and link checks pass, but it has not been run on a real Windows machine yet. In the UCRT64 terminal:
-
-```sh
-pacman -S --needed make flex mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-python
-make -j4 CC=gcc PYTHON=python BUILD_DIR=build/windows windows-test
-```
-
-This builds `build/windows/bin/ruvac.exe`.
-
-</details>
-
-<details>
-<summary>Inspection tools</summary>
-
-<br>
-
-```sh
-build/debug/tests/lexer/lexer-probe tests/fixtures/lexer/literals/input.ruv
-build/debug/tests/parser/parser-probe tests/fixtures/parser/expression/input.ruv
-build/debug/tests/semantic/semantic-probe --summary tests/fixtures/semantic/imports/input.ruv
-```
-
-These print the tokens, the syntax tree and the checked module summary of a program.
-
-</details>
-
-## Author
-
-Built by [khalid999devs](https://github.com/khalid999devs).
+Ruva is released under the [MIT License](LICENSE). Built by [khalid999devs](https://github.com/khalid999devs).
